@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oceanisle Games | Pré-registro</title>
+<meta name="description" content="Um jogo de sobrevivência no Roblox onde tudo é feito pelos jogadores. Sem NPCs. Faça seu pré-registro.">
+<style>
+  :root {
+    --deep: #0f3d5e;
+    --sea: #145c8a;
+    --wave: #1f7fb5;
+    --foam: #6bbbe0;
+    --sand: #e8c987;
+    --sun: #f6c453;
+    --text: #f2f8fc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 56px 0 40px; text-align: center; background: var(--sea); }
+  .studio { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--foam); margin-bottom: 14px; }
+  h1 { font-size: clamp(34px, 8vw, 56px); line-height: 1.1; margin-bottom: 16px; }
+  .sub { font-size: 18px; color: #d6e9f5; max-width: 480px; margin: 0 auto; }
+  .waves { display: block; width: 100%; height: 48px; background: var(--sea); }
+  section { padding: 36px 0; }
+  h2 { font-size: 24px; margin-bottom: 14px; }
+  .cards { display: grid; gap: 14px; }
+  .card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); border-radius: 12px; padding: 18px; }
+  .card b { color: var(--sun); display: block; margin-bottom: 4px; }
+  form { display: grid; gap: 12px; margin-top: 8px; }
+  input[type=email] {
+    width: 100%; padding: 15px 16px; font-size: 16px; border-radius: 10px;
+    border: 2px solid transparent; background: #fff; color: #0b2a40;
+  }
+  input[type=email]:focus { outline: none; border-color: var(--sun); }
+  button {
+    padding: 15px 16px; font-size: 17px; font-weight: 600; border: 0; border-radius: 10px;
+    background: var(--sun); color: #3b2a00; cursor: pointer;
+  }
+  button:hover { filter: brightness(1.06); }
+  button:disabled { opacity: .6; cursor: default; }
+  #msg { min-height: 24px; font-size: 15px; }
+  .ok { color: #9be7b0; } .err { color: #ffb4a8; }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .links a { color: var(--text); border: 1px solid rgba(255,255,255,.3); padding: 10px 16px; border-radius: 999px; text-decoration: none; font-size: 15px; }
+  .links a:hover { background: rgba(255,255,255,.1); }
+  footer { padding: 28px 0 40px; text-align: center; font-size: 13px; color: #9cc3dc; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="studio">Oceanisle Games</div>
+    <h1>NOME DO SEU JOGO</h1>
+    <p class="sub">Uma ilha. Pedra e galho. Sem NPCs: tudo no mundo é feito pelos jogadores.</p>
+  </div>
+</header>
+<svg class="waves" viewBox="0 0 640 48" preserveAspectRatio="none" aria-hidden="true">
+  <rect width="640" height="48" fill="#145c8a"/>
+  <path d="M0 24 Q40 4 80 24 T160 24 T240 24 T320 24 T400 24 T480 24 T560 24 T640 24 L640 48 L0 48 Z" fill="#0f3d5e"/>
+</svg>
+
+<main class="wrap">
+  <section>
+    <h2>Como vai ser</h2>
+    <div class="cards">
+      <div class="card"><b>Comece do zero</b>Colete pedra e galho, faça suas ferramentas e construa seu abrigo.</div>
+      <div class="card"><b>Mundo feito por jogadores</b>Sem NPCs. Quem constrói, troca e vende são os jogadores.</div>
+      <div class="card"><b>Ilha compartilhada</b>Servidores pequenos para o mundo parecer vivo.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Faça seu pré-registro</h2>
+    <p>Deixe seu e-mail e avisamos quando o jogo abrir para testes.</p>
+    <form id="form" method="POST" action="COLE_AQUI_O_LINK_DO_FORMSPREE">
+      <input type="email" name="email" id="email" placeholder="seuemail@exemplo.com" required autocomplete="email">
+      <button type="submit" id="btn">Quero participar</button>
+      <div id="msg" role="status"></div>
+    </form>
+    <div class="links">
+      <a href="#" id="discord">Entrar no Discord</a>
+      <a href="#" id="tiktok">Seguir no TikTok</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Oceanisle Games &copy; 2026. Jogo independente feito na plataforma Roblox.</div>
+</footer>
+
+<script>
+  var form = document.getElementById("form");
+  var msg = document.getElementById("msg");
+  var btn = document.getElementById("btn");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var action = form.getAttribute("action");
+    if (action.indexOf("COLE_AQUI") === 0) {
+      msg.className = "err";
+      msg.textContent = "Formulário ainda não configurado. Falta colocar o link do Formspree.";
+      return;
+    }
+    btn.disabled = true;
+    msg.className = "";
+    msg.textContent = "Enviando...";
+    fetch(action, {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: new FormData(form)
+    }).then(function (r) {
+      if (r.ok) {
+        msg.className = "ok";
+        msg.textContent = "Pronto! Você está na lista. Em breve avisamos.";
+        form.reset();
+      } else {
+        throw new Error("fail");
+      }
+    }).catch(function () {
+      msg.className = "err";
+      msg.textContent = "Algo deu errado. Tente de novo em instantes.";
+    }).finally(function () {
+      btn.disabled = false;
+    });
+  });
+</script>
+</body>
+</html>
